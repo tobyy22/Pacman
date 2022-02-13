@@ -1,0 +1,10 @@
+Uživatelská dokumentace:
+
+Používání programu je velice jednoduché. Po spuštění programu se objeví okno se 2
+nabídkami - začít hrát (obrázek) nebo ukončit hru. Po kliknutí na začít hrát se
+spustí hra. Vaším úkolem je sbírat diamanty a vyhýbat se duchům. Hra se intuitivně
+ovládá šipkami na klávesnici. Hranice mapy jsou jasně ohraničené. Když chytíte
+diamant, tak tento se z mapy odstraní a přičte se vám bod. Naopak, když vás chytne
+duch, přijdete o život. Životy máte  celkem 3. Po chycení všech diamantů nebo
+utracení všech životů hra skončí. Hra vám vypíše, jak jste si vedli a budete mít
+možnost začít hrát znovu, případně hru ukončit. 

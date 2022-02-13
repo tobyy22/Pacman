@@ -1,0 +1,91 @@
+Programátorská dokumentace:
+
+Aplikace je rozdělena do 2 modulů - pacman.cs a Form1.cs.
+
+Form1.cs
+
+Form1 se stará o řízení samotného okna - nastavuje jeho velikost podle velikosti
+mapy, nastavuje viditelnost jednotlivých prvků(tlačítka, labely, obrázky).
+Obsahuje funkci zacniHru, která je volána při stisku tlačítka "play". Tato
+funkce odpovídajícím způsobem z(ne)viditelní jednotlivé prvky tak, aby se
+správně zobrazovalo okno samotné hry. Kromě toho tato funkce vytvoří novou
+instanci třídy Mapa, kterou dosadí do proměnné mapa. Dále vytvoří nový objekt
+Graphics, který bude předávat mapě a pomocí kterého mapa bude vykreslovat
+mapu a objekty v průběhu hry. Funkce dále vykreslí mapu (funkce objektu mapa),
+pustí časovač a mapu dá do stavu Bezi. "Opačná" funkce KonecHry opět zobrazí
+relevantní prvky a vypne časovač. Form1 dále obsahuje zmíněný časovač, který
+může být 2 stavech - enabled nebo !enabled. Pokud je ve stavu enabled, odpovídá
+to tomu, že se tato funkce volá periodicky v nějakých intervalech. Časovač běží
+pouze tehdy, když běží samotná hra - v momentě, kdy hra skončí, časovač
+vypínáme. Časovač rozlišuje, ve kterém stavu se mapa nachází, pokud se jedná o
+stav Bezi tak průběžně aktualizuje polohu všech prvků ve hře a vykreslí je
+(jedná se o funkce objektu mapa). Dále aktualizuje skóre hráče. V jiném případě,
+pokud hráč vyhrál nebo prohrál, časovač zavolá odpovídající funkci KonecHry,
+čímž se také vypne. Dále Form1.cs obsahuje funkci, která reaguje na stisk šipek
+na klávesnici. Jelikož šipky mají jedinou funkci a na žádné jiné klávesy
+aplikace nikdy nereaguje, připadá mi nejjednodušší, aby přímo tato funkce měnila
+směr pacmana, což je proměnná objektu mapa. Poslední funkce reaguje na stisk
+tlačítka Ukončit, která pouze zavírá celé okno a tím ukončuje aplikaci.
+
+pacman.cs
+
+Samotná hra je řízena modulem pacman.cs. Případné detaily jsou uvedeny v
+komentářích v kódu, zde se jedná spíše o celkový popis. Tento modul je složen ze
+třídy PohyblivyPrvek a z ní odvozených tříd Pacman, Diamant a Diaduch. Třída
+PohyblivyPrvek obsahuje proměnné, které chceme znát u každého objektu (+ odvozených) této
+třídy, jako je jeho poloha vyjádřená v pixelech vzhledem k levému hornímu rohu
+okna, chceme znát souřadnice, kde se prvek nacházel na začátku hry, jeho
+aktuální směr, id, které využívám k rozlišení ducha a diamantu a další, které
+jsou v případě nejasností vysvětleny v komentářích. Tato třída obsahuje
+virtuální funkci UdelejKrok, která se pouze podívá na směr objektu, podívá se,
+zda jej může přesunout o krok dále v tomto směru a případně jej přesune - změní proměnné x a y.
+Velikost kroku je vyjádřena v pixelech - jedná se o proměnnou rychlost. Funkce
+testuje, zda by objekt nevyšel z mapy a zda by objekt nekolidoval s jiným
+objektem (kromě hrdiny). Pokud objekt může udělat udělat krok, funkce jej
+odpovídajícím způsobem přesune. Pokud nemůže, vygeneruje se jiný náhodný směr.
+Je nutné si uvědomit, že Diamant a Diaduch musí být v mezích mapy a nesmí
+kolidovat s jinými objekty (kromě Pacmana) a Pacman se pouze musí držet v mezích
+mapy (princip hry - kolidovat může), takže Pacman si tuto funkci musí kompletně přepsat.
+Diamant a Diaduch využívají tuto funkci předchůdce a jistým způsobem si ji doplňují.
+Třídu Pacman také odvozujeme od PohyblivyPrvek, ale funkci UdelejKrok kompletně
+přepisujeme. Přepsaná funkce UdelejKrok pracuje především s proměnnými Smer a
+zkusSmer. V případě, že se stiskne šipka na klávesnici, změní se odpovídajícím
+způsobem proměnná zkusSmer. Při kroku se pak Pacman podívá, zda jsou tyto
+proměnné rozdílné. Pokud jsou, znamená to, že uživatel chce, aby Pacman šel jiným
+směrem než doposud. Pacman se podívá, zda směrem zkusSměr může udělat krok. Pokud
+může, změní Smer a pokračuje novým směrem. Pokud nemůže udělat krok, pokračuje starým
+směrem a zkusSmer zkusí opět v dalším kroku. Díky této vlastnosti má Pacman dobré (z mého
+pohledu) ovládací vlastnosti. Z třídy Pacman budeme v průběhu hry vytvářet jediný objekt.
+Třídy Diaduch a Diamant jsou velice podobné. Obě využívají funkce předka, tedy
+base.UdelejKrok, ale předtím se za určitých okolností snaží změnit směr objektu
+- snaží se simulovat to, aby Diamanty utíkaly od Pacmana, Diaduchové aby ho
+chytali. Oba tyto objekty se dívají, zda se jejich x-ová nebo y-ová souřadnice
+rovnají Pacmanovým souřadnicím a podle toho se snaží jít zmíněným směrem. Stačí
+kontrolovat, zda je to udrží v mezích mapy, o zbytek se postará funkce předka.
+Snadno by se mohlo stát, že by se nějaký objekt někde v mapě zasekl zasekl,
+proto jsem nastavil minimální vzdálenost, kterou objekt musí urazit než bude
+moct opět tímto způsobem změnit směr. Nejedná se o nikterak složitý algoritmus,
+spíše o jakousi heuristiku, u které se mi líbilo, že hru to nedělá příliš
+složitou ani příliš jednoduchou. Zbývající objekt je Mapa reprezentující herní
+mapu. Mapa se načítá ze souboru - vstupní soubor obsahuje jak samotné hranice
+mapy, tak pacmana, diamanty i duchy - každý prvek reprezentovaný jiným písmenem.
+Mapu pak po řádcích načítám do 2 rozměrného pole znaků plan. Mapa má svého
+hrdinu a list zbylých objektů - díky polymorfismu jim mohu dát společný typ
+PohyblivyPrvek. Tyto objekty se vytváří hned při načítání mapy. Mapa má pak
+mnoho funkcí - především na samotné načtení mapy, na vykreslovaní mapy a objektů
+a na testování kolizí objektů. Detailněji, případné možné nejasnosti jsou popsány v
+komentářích. Zde bych zmínil jednak to, že mapa si vytváří bitmapové pole
+ikonky, pomocí kterých hru vykresluje. Vždy je nutné si hlídat, na kterém indexu
+se vyskytuje ikonka, kterou chceme vykreslit. Dále bych určitě zmínil funkci
+SpravVykresleni. Uvědomme si, že když nějaký prvek udělá krok, tak ho sice
+vykreslíme na jiné pozici, ale na jeho staré pozici ho musíme smazat. To řeším
+tak, že se podívám na proměnnou ZmenaX nebo ZmenaY - jakým směrem a o kolik se
+prvek posunul. Na tu rozdílovou část pak vykreslím odpovídající počet černých
+pruhů velikost 2x20 nebo 20x2 - z toho plyne, že rychlost objektu musí být sudá.
+Samozřejmě jsem mohl překreslovat celé původní objekty a pak je vykreslit na
+novém místě, tímto způsobem je to nicméně rychlejší. Dále zmíním funkce
+pohybPrvku, která na všech prvcích ze seznamu DiamantyaDuchove a na pacmana
+zavolá funkci UdelejKrok. Dále pak funkci, vykresliPrvky, která všechny prvky
+vykreslí, přičemž využívá funkce SpravVykresleni. Poslední 2 zmíněné funkce jsou
+právě ty, které se periodicky volají v časovači. Funkce zbylých funkcí by měly
+být zřejmé, případně jsou dovysvětleny v komentářích.

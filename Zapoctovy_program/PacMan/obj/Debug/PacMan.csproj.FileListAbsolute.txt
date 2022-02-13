@@ -1,0 +1,12 @@
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\bin\Debug\HerniGrafika.png
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\bin\Debug\HerniPlan.txt
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\bin\Debug\PacMan.exe.config
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\bin\Debug\PacMan.exe
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\bin\Debug\PacMan.pdb
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\obj\Debug\PacMan.csprojAssemblyReference.cache
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\obj\Debug\PacMan.Form1.resources
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\obj\Debug\PacMan.Properties.Resources.resources
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\obj\Debug\PacMan.csproj.GenerateResource.cache
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\obj\Debug\PacMan.csproj.CoreCompileInputs.cache
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\obj\Debug\PacMan.exe
+C:\Users\tobia\Desktop\Zapoctovy_program\PacMan\obj\Debug\PacMan.pdb
